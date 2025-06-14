@@ -1,0 +1,25 @@
+@font-face {
+  font-family: 'Cabinet Grotesk';
+  src: url('../../vendor/cabinet-grotesk/CabinetGrotesk-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Cabinet Grotesk Bold';
+  src: url('../../vendor/cabinet-grotesk/CabinetGrotesk-Bold.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.page {
+    background-color: rgba(243, 243, 243, 1);
+}
+
+.page__content {
+    max-width: 1440px;
+    max-height: 822px;
+    margin: 0 auto;
+    padding: 0 20px;
+    font-family: 'Cabinet Grotesk', sans-serif;
+}
