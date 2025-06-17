@@ -10,7 +10,7 @@ function Header({ openModalClick, weatherData }) {
 
   return (
     <header className="header">
-      <img className="header_logo" src={logo} />
+      <img className="header_logo" alt="WTWR" src={logo} />
       <p className="header__date-and-location"> {currentDate}, {weatherData.city}</p>
       <button
         onClick={openModalClick}
