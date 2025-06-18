@@ -44,7 +44,7 @@ function App() {
         <ModalWithForm
           title="New Garment"
           buttonText="Add Garment"
-          activeModal={activeModal}
+          isOpen={activeModal === "add-garment"}
           closeModalClick={closeModalClick}
         >
           <div className="modal__block">
