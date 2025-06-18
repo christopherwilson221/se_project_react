@@ -28,4 +28,3 @@ function ModalWithForm({
 }
 
 export default ModalWithForm;
-/*isOpen= does not pass*/
