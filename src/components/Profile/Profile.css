@@ -1,0 +1,6 @@
+.profile{
+    display: flex;
+    flex-direction: row;
+    top: 119px;
+    gap: 116px;
+}
