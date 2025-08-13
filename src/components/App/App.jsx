@@ -12,7 +12,7 @@ import CurrentTemperatureUnitContext from "../../contexts/currentTemperatureUnit
 import AddItemModal from "../AddItemModal/AddItemModal.jsx";
 import { defaultClothingItems } from "../../utils/constants.js";
 import { Routes, Route } from "react-router-dom";
-import { getItems } from "../../utils/api.js";
+import { getItems, addItem, deleteItem } from "../../utils/api.js";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -47,14 +47,11 @@ function App() {
   };
 
   const handleAddItemModalSubmit = ({name, imageUrl, weather}) => {
-    const newId = Math.max(...clothingItems.map((item) => item._id)) + 1;
-
-    setClothingItems((prevItems) => [
-      ...prevItems, 
-      {name, link: imageUrl, weather, id: newId}
-  
-    ]);
-
+    addItem(name, imageUrl, weather)
+      .then((newItem) => {
+        setClothingItems((prevItems) => [...prevItems, newItem]);
+      })
+      .catch(console.error);
     closeModalClick();
   }
 
@@ -101,6 +98,7 @@ function App() {
             activeModal={activeModal}
             selectedCard={selectedCard}
             closeModalClick={closeModalClick}
+            deleteItem={deleteItem}
           />
         </div>
       </div>
