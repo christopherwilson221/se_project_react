@@ -1,6 +1,6 @@
 import "./ItemModal.css";
 
-function ItemModal({ activeModal, selectedCard, closeModalClick, deleteItem }) {
+function ItemModal({ activeModal, selectedCard, closeModalClick, handleDeleteItem }) {
   return (
     <div className={`modal ${activeModal === "preview" && "modal_open"}`}>
       <div className="modal__item_content">
@@ -10,7 +10,7 @@ function ItemModal({ activeModal, selectedCard, closeModalClick, deleteItem }) {
           onClick={closeModalClick}
         ></button>
         <img
-          src={String(selectedCard.link)}
+          src={String(selectedCard.imageUrl)}
           alt={selectedCard.name}
           className="modal__item_image"
         />
@@ -21,7 +21,7 @@ function ItemModal({ activeModal, selectedCard, closeModalClick, deleteItem }) {
         </div>
         <button
           className="modal__item_delete"
-          onClick={() => deleteItem(selectedCard._id)}
+          onClick={() => handleDeleteItem(selectedCard._id)}
         >
           Delete item
         </button>

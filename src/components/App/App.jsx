@@ -2,7 +2,6 @@ import "./App.css";
 import Header from "../Header/Header.jsx";
 import Main from "../Main/Main.jsx";
 import Footer from "../Footer/Footer.jsx";
-import ModalWithForm from "../ModalWithForm/ModalWithForm.jsx";
 import ItemModal from "../ItemModal/ItemModal.jsx";
 import Profile from "../Profile/Profile.jsx";
 import { useEffect, useState } from "react";
@@ -10,7 +9,6 @@ import { coordinates, APIkey } from "../../utils/constants.js";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi.js";
 import CurrentTemperatureUnitContext from "../../contexts/currentTemperatureUnit.js";
 import AddItemModal from "../AddItemModal/AddItemModal.jsx";
-import { defaultClothingItems } from "../../utils/constants.js";
 import { Routes, Route } from "react-router-dom";
 import { getItems, addItem, deleteItem } from "../../utils/api.js";
 
@@ -22,12 +20,11 @@ function App() {
     condition: "sunny",
     isDay: false,
     coordinates: "0;0",
-
   });
   const [activeModal, setActiveModal] = useState("none");
   const [selectedCard, setSelectedCard] = useState("none");
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
-  const [clothingItems, setClothingItems] = useState(defaultClothingItems);
+  const [clothingItems, setClothingItems] = useState([]);
 
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
@@ -46,27 +43,36 @@ function App() {
     setActiveModal("none");
   };
 
-  const handleAddItemModalSubmit = ({name, imageUrl, weather}) => {
+  const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
     addItem(name, imageUrl, weather)
       .then((newItem) => {
-        setClothingItems((prevItems) => [...prevItems, newItem]);
+        setClothingItems((prevItems) => [newItem, ...prevItems]);
+        getItems().then((data) => {
+          setClothingItems(data);
+        });
+        closeModalClick();
       })
       .catch(console.error);
-    closeModalClick();
-  }
+  };
+
+  const handleDeleteItem = (itemId) => {
+    deleteItem(itemId)
+      .then(() => {
+        getItems().then((data) => {
+          setClothingItems(data);
+        });
+        closeModalClick();
+      })
+      .catch(console.error);
+  };
 
   useEffect(() => {
-    getWeather(coordinates, APIkey)
-      .then((coordinates) =>{
-        console.log(coordinates)
-        setWeatherData(filterWeatherData(coordinates));
-      })
-    getItems()
-      .then((data) => {
-        console.log(data)
-      })
-      .catch(console.error)
-
+    getWeather(coordinates, APIkey).then((coordinates) => {
+      setWeatherData(filterWeatherData(coordinates));
+    });
+    getItems().then((data) => {
+      setClothingItems(data);
+    });
   }, []);
 
   return (
@@ -77,16 +83,26 @@ function App() {
         <div className="page__content">
           <Header openModalClick={openModalClick} weatherData={weatherData} />
           <Routes>
-            <Route path="/" element={
-              <Main
-            clothingItems={clothingItems}
-            weatherData={weatherData}
-            openCardClick={openCardClick} 
-          />
-            }> 
-            </Route>
-            <Route path="/profile" element={<Profile openModalClick={openModalClick} clothingItems={clothingItems} onCardClick={openCardClick}/>}>
-            </Route>
+            <Route
+              path="/"
+              element={
+                <Main
+                  clothingItems={clothingItems}
+                  weatherData={weatherData}
+                  openCardClick={openCardClick}
+                />
+              }
+            ></Route>
+            <Route
+              path="/profile"
+              element={
+                <Profile
+                  openModalClick={openModalClick}
+                  clothingItems={clothingItems}
+                  onCardClick={openCardClick}
+                />
+              }
+            ></Route>
           </Routes>
           <Footer />
           <AddItemModal
@@ -98,7 +114,7 @@ function App() {
             activeModal={activeModal}
             selectedCard={selectedCard}
             closeModalClick={closeModalClick}
-            deleteItem={deleteItem}
+            handleDeleteItem={handleDeleteItem}
           />
         </div>
       </div>

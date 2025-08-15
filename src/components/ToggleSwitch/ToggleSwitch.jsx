@@ -8,7 +8,7 @@ export default function ToggleSwitch() {
   );
 
   return (
-    <label class="toggle-switch">
+    <label className="toggle-switch">
       <input
         className="toggle-switch__checkbox"
         type="checkbox"
