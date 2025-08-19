@@ -64,6 +64,7 @@
   height: 100%;
   object-fit: contain;
   border: 0cap;
+  background-color: transparent;
 }
 
 .modal__item_left{

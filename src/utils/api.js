@@ -1,7 +1,7 @@
 const baseUrl = 'http://localhost:3001/items';
 
 function checkResponse(res) {
-    return res.ok ? res.json() : Promise.reject('Error: ${res.status}'); 
+    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`); 
 }
 
 function getItems() {
@@ -14,10 +14,11 @@ function addItem(name, imageUrl, weather) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(
+        body: JSON.stringify({
             name, 
             imageUrl,
-            weather)
+            weather
+        })
     }).then(checkResponse);
 };
 

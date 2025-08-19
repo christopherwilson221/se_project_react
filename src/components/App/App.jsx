@@ -47,9 +47,6 @@ function App() {
     addItem(name, imageUrl, weather)
       .then((newItem) => {
         setClothingItems((prevItems) => [newItem, ...prevItems]);
-        getItems().then((data) => {
-          setClothingItems(data);
-        });
         closeModalClick();
       })
       .catch(console.error);
@@ -58,9 +55,9 @@ function App() {
   const handleDeleteItem = (itemId) => {
     deleteItem(itemId)
       .then(() => {
-        getItems().then((data) => {
-          setClothingItems(data);
-        });
+        setClothingItems((prevItems) =>
+          prevItems.filter((item) => item._id !== itemId)
+        );
         closeModalClick();
       })
       .catch(console.error);

@@ -25,15 +25,14 @@ export default function AddItemModal({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddItemModalSubmit({ name, imageUrl, weather })
-    .then(() => {
-      useEffect(() => {
-        setName("");
-        setimageUrl("");
-        setWeather("");
-      }, [isOpen]);
-    });
+    onAddItemModalSubmit({ name, imageUrl, weather });
   };
+
+  useEffect(() => {
+    setName("");
+    setimageUrl("");
+    setWeather("");
+  }, [isOpen]);
 
   return (
     <ModalWithForm
@@ -49,7 +48,7 @@ export default function AddItemModal({
           Name
           <input
             type="text"
-            id="clothing-name"
+            id="name"
             name="name"
             className="modal__input"
             placeholder="Name"
