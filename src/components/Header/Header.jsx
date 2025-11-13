@@ -3,6 +3,10 @@ import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import logo from "../../assets/logo.png";
 import avatar from "../../assets/avatar.png";
 import { Link } from "react-router-dom";
+import { isLoggedIn } from "../../utils/auth.js";
+import ProtectedRoute from "../ProtectedRoute";
+import { useEffect } from "react";
+import user from "../../../../se_project_express-main/models/user.js";
 
 function Header({ openModalClick, weatherData }) {
   console.log("Header props:", { openModalClick, weatherData });
@@ -22,18 +26,46 @@ function Header({ openModalClick, weatherData }) {
       </div>
       <div className="header__right-container">
       <ToggleSwitch />
+      <ProtectedRoute isLoggedIn={isLoggedIn()}>
       <button
         onClick={openModalClick}
         type="button"
         className="header__add-clothes-btn"
       > + Add clothes
       </button>
-      <Link to="/profile">
-            <div className="header__user-container">
+      </ProtectedRoute>
+      <Link to="/profile" isLoggedIn={!isLoggedIn()}>
+            <div className="header__user-container" isLoggedIn={!isLoggedIn()}>
         <p className="header__username">Terrence Tegegnee</p>
         <img
           src={avatar}
           alt="Terrence Tegegne"
+          className="header__avatar"
+        ></img>
+        </div>
+        <div className="header__user-container" isLoggedIn={isLoggedIn()}>
+        <p className="header__username"><User>{user.username}</User></p>
+        <img
+          src={avatar}
+          alt="Username"
+          className="header__avatar"
+        ></img>
+        </div>
+      </Link>
+      <Link to="/profile" isLoggedIn={isLoggedIn()}>
+            <div className="header__user-container" isLoggedIn={!isLoggedIn()}>
+        <p className="header__username">{username}</p>
+        <img
+          src={avatar}
+          alt="Terrence Tegegne"
+          className="header__avatar"
+        ></img>
+        </div>
+        <div className="header__user-container" isLoggedIn={isLoggedIn()}>
+        <p className="header__username"><User>{user.username}</User></p>
+        <img
+          src={avatar}
+          alt="Username"
           className="header__avatar"
         ></img>
         </div>

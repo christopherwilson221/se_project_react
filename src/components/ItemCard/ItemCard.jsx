@@ -1,6 +1,8 @@
 import "./ItemCard.css";
+import { isLoggedIn } from "../../utils/auth.js";
 
 function ItemCard({ item, onCardClick }) {
+  if (isLoggedIn()) {
   return (
     <li className="card" key={item._id}>
       <h2 className="card__name">{item.name}</h2>
@@ -14,6 +16,6 @@ function ItemCard({ item, onCardClick }) {
       />
     </li>
   );
-}
+}}
 
 export default ItemCard;

@@ -9,16 +9,18 @@ function ClothesSection({openModalClick, onCardClick, clothingItems}) {
             <button className='clothes-section__button' onClick={openModalClick}>+Add New</button>
         </div> 
         <ul className="clothes-section__list">
-          {clothingItems
-            .map((item, index) => {
-              return (
-                <ItemCard
-                  key={item._id}
-                  item={item}
+          {isOwn && (
+            clothingItems
+              .map((item) => {
+                return (
+                  <ItemCard
+                    key={item._id}
+                    item={item}
                   onCardClick={onCardClick}
                 />
               );
-            })}
+            })
+          )}
         </ul>
     </div>
 );

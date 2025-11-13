@@ -1,5 +1,5 @@
 import "./WeatherCard.css";
-import sunny from "../../assets/sunny.png";
+import sunny from "../../assets/Sunny.png";
 import { useContext } from "react";
 import CurrentTemperatureUnitContext from "../../contexts/currentTemperatureUnit";
 

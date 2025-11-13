@@ -15,4 +15,6 @@ function Profile({openModalClick, onCardClick, clothingItems}) {
 );
 }
 
+
+
 export default Profile;
