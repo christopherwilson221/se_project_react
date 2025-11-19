@@ -2,7 +2,7 @@ import "./Main.css";
 import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
 import { useContext } from "react";
-import CurrentTemperatureUnitContext from "../../contexts/currentTemperatureUnit.js";
+import CurrentTemperatureUnitContext from "../../contexts/currentTemperatureUnit.jsx";
 
 function Main({ weatherData, openCardClick, clothingItems }) {
   console.log("weatherData:", weatherData);
@@ -14,25 +14,29 @@ function Main({ weatherData, openCardClick, clothingItems }) {
       <WeatherCard weatherData={weatherData} />
       <section className="cards">
         <p className="cards__text">
-          Today is {currentTemperatureUnit === "F"
-          ? weatherData.temp.F
-          : weatherData.temp.C}{" "}
-        &deg; {currentTemperatureUnit}/ you may want to wear:
+          Today is{" "}
+          {currentTemperatureUnit === "F"
+            ? weatherData.temp.F
+            : weatherData.temp.C}{" "}
+          &deg; {currentTemperatureUnit}/ you may want to wear:
         </p>
         <ul className="cards__list">
-          {clothingItems
-            .filter((item) => {
-              return item.weather === weatherData.type;
-            })
-            .map((item, index) => {
-              return (
-                <ItemCard
-                  key={item._id}
-                  item={item}
-                  onCardClick={openCardClick}
-                />
-              );
-            })}
+          {Array.isArray(clothingItem) &&
+            clothingItem
+              .filter((item) => item && item.weather)
+              .filter((item) => {
+                return item.weather === weatherData.type;
+              })
+              .map((item) => {
+                return (
+                  <ItemCard
+                    key={item._id}
+                    item={item}
+                    onCardClick={onCardClick}
+                    onCardLike={onCardLike}
+                  />
+                );
+              })}
         </ul>
       </section>
     </main>

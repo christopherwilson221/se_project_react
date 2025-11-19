@@ -3,12 +3,12 @@ import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import logo from "../../assets/logo.png";
 import avatar from "../../assets/avatar.png";
 import { Link } from "react-router-dom";
-import { isLoggedIn } from "../../utils/auth.js";
 import ProtectedRoute from "../ProtectedRoute";
-import { useEffect } from "react";
-import user from "../../../../se_project_express-main/models/user.js";
+import currentUser from "../../contexts/CurrentUserContext.jsx";
+import { useContext } from "react";
 
-function Header({ openModalClick, weatherData }) {
+function Header({ openModalClick, weatherData, isLoggedIn }) {
+  const currentUser = useContext(CurrentUserContext);
   console.log("Header props:", { openModalClick, weatherData });
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
@@ -26,7 +26,7 @@ function Header({ openModalClick, weatherData }) {
       </div>
       <div className="header__right-container">
       <ToggleSwitch />
-      <ProtectedRoute isLoggedIn={isLoggedIn()}>
+      <ProtectedRoute isLoggedIn={isLoggedIn}>
       <button
         onClick={openModalClick}
         type="button"
@@ -34,8 +34,8 @@ function Header({ openModalClick, weatherData }) {
       > + Add clothes
       </button>
       </ProtectedRoute>
-      <Link to="/profile" isLoggedIn={!isLoggedIn()}>
-            <div className="header__user-container" isLoggedIn={!isLoggedIn()}>
+      <Link to="/profile" isLoggedIn={!isLoggedIn}>
+            <div className="header__user-container" isLoggedIn={!isLoggedIn}>
         <p className="header__username">Terrence Tegegnee</p>
         <img
           src={avatar}
@@ -43,8 +43,8 @@ function Header({ openModalClick, weatherData }) {
           className="header__avatar"
         ></img>
         </div>
-        <div className="header__user-container" isLoggedIn={isLoggedIn()}>
-        <p className="header__username"><User>{user.username}</User></p>
+        <div className="header__user-container" isLoggedIn={isLoggedIn}>
+        <p className="header__username">{currentUser.username}</p>
         <img
           src={avatar}
           alt="Username"
@@ -52,17 +52,17 @@ function Header({ openModalClick, weatherData }) {
         ></img>
         </div>
       </Link>
-      <Link to="/profile" isLoggedIn={isLoggedIn()}>
-            <div className="header__user-container" isLoggedIn={!isLoggedIn()}>
-        <p className="header__username">{username}</p>
+      <Link to="/profile" isLoggedIn={isLoggedIn}>
+            <div className="header__user-container" isLoggedIn={!isLoggedIn}>
+        <p className="header__username">{currentUser.username}</p>
         <img
           src={avatar}
           alt="Terrence Tegegne"
           className="header__avatar"
         ></img>
         </div>
-        <div className="header__user-container" isLoggedIn={isLoggedIn()}>
-        <p className="header__username"><User>{user.username}</User></p>
+        <div className="header__user-container" isLoggedIn={isLoggedIn}>
+        <p className="header__username">{currentUser.username}</p>
         <img
           src={avatar}
           alt="Username"

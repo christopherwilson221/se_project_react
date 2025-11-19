@@ -1,26 +1,31 @@
+import React from "react";
+import headerAvater from "../../assets/avatar.png";
 import "./SideBar.css";
 import avatar from "../../assets/avatar.png";
-import { isLoggedIn } from "../../utils/auth.js";
 
-function Sidebar() {
-    return (
-    <div className='sidebar'>
-        <img className="sidebar__avatar" src={avatar} alt="Default Avatar" />
-        <p className="sidebar__username">Terrence Tegegnee</p>
+function Sidebar({ onLogoutClick, onEditClick }) {
+  const { currentUser } = React.useContext(CurrentUserContext);
+
+  return (
+    <div className="sidebar">
+      <img className="sidebar__avatar" src={avatar} alt="Default Avatar" />
+      <p className="sidebar__username">{currentUser.name || "Placeholder"}</p>
+      <div className="sidebar__log">
+        <button
+          className="sidebar__edit-button"
+          onClick={onEditClick}
+          >
+            Change profile data
+        </button>
+        <button
+          className="sidebar__logout-button"
+          onClick={onLogoutClick}
+        >
+          Log out   
+          </button>
     </div>
-);
-}
-
-function editProfile() {
-    if (isLoggedIn()) {
-        
-    // Functionality to edit profile goes here
-}   
-
-function signOut() {
-    if (isLoggedIn()) {
-    // Functionality to sign out goes here
-}
+    </div>
+  );
 }
 
 export default Sidebar;

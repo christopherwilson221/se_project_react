@@ -25,15 +25,19 @@ export const signin = (email, password) => {
   });
 };
 
+export const setToken = (token) => {
+  return localStorage.setItem("token", token);
+}
+
 export const getToken = () => {
-    return localStorage.getItem("token"),  { 
+    return (localStorage.getItem("token"), { 
   method: "GET",
   headers: {
     "Content-Type": "application/json",
     authorization: `Bearer ${token}`,
   },
-};
-};
+});};
+
 
 export const removeToken = () => {
   return localStorage.removeItem("token");

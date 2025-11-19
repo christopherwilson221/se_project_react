@@ -1,87 +1,121 @@
-import "./AddItemModal.css";
+import "./RegisterModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useEffect, useState } from "react";
 
-const Register = ({ handleRegister }) => {
-  const [data, setData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+const Register = ({ handleRegister, isOpen, closeModalClick, onLoginClick }) => {
+  const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [avatar, setAvatar] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+   const handleNameChange = (e) => {
+        console.log(e.target.value);
+        setName(e.target.value);
+    };
+    const handlePasswordChange = (e) => {
+        console.log(e.target.value);
+        setPassword(e.target.value);
+    };
+    const handleEmailChange = (e) => {
+        console.log(e.target.value);
+        setEmail(e.target.value);
+    };
+    const handleAvatarChange = (e) => {
+        console.log(e.target.value);
+        setAvatar(e.target.value);
+    };
+    const handleRegistrationSubmit = (e) => {
+        e.preventDefault();
+        handleRegistration({name, email, password, avatar});
+    };
 
-    const handleSubmit = (e) => {
-    e.preventDefault();
-    handleRegistration(data);
-  };
+    useEffect(() => {
+        if (isOpen) {
+          setName("");
+          setAvatar("");
+          setPassword("");
+          setEmail("");
+        }
+      }, [isOpen]);
 
-  useEffect(() => {
-    setData({
-      username: "",
-      password: "",
-      confirmPassword: "",
-    });
-  }, [isOpen]);
+   return (
+        <ModalWithForm
+        title="Sign up"
+        isOpen={isOpen}
+        onClose={onClose}
+        onSubmit={handleRegistrationSubmit}
+        >
+            <div className="modal__text-deco">
+            <label>
+                Email *
+                <input
+                type="email"
+                name="email"
+                minLength="1"
+                maxLength="30"
+                placeholder="Email"
+                required
+                value={email}
+                onChange={handleEmailChange}
+                className="modal__input"
+                />
+            </label>
+            <label>
+                Password *
+                <input
+                type="password"
+                name="password"
+                minLength="1"
+                placeholder="Password"
+                required
+                value={password}
+                onChange={handlePasswordChange}
+                className="modal__input"
+                />
+            </label>
+            <label>
+                Name * 
+                <input 
+                className ="modal__input"
+                type="text"
+                name="Name"
+                minLength="1"
+                maxLength="30"
+                placeholder="Name"
+                required
+                value={name}
+                onChange={handleNameChange}
+                />
+            </label>
+            <label>
+                Avatar URL *
+                <input
+                type="url"
+                name="avatar"
+                placeholder="Avatar URL"
+                value={avatar}
+                required
+                onChange={handleAvatarChange}
+                className="modal__input"
+                />
+            </label>
+            <div className="modal__button-div">
+            <button type="submit" className="modal__button-sign-up">
+                Sign Up
+                {" "}
+            </button>
 
-  return (
-    <ModalWithForm
-      title="Register"
-      buttonText="Register"
-      name="register"
-      isOpen={isOpen}
-      closeModalClick={closeModalClick}
-      onSubmit={handleSubmit}
-    >
-      <form className="register__form" onSubmit={handleSubmit}>
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          value={data.username}
-          required
-          onChange={handleChange}
-        />
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          required
-          value={data.password}
-          onChange={handleChange}
-        />
-        <label htmlFor="confirmPassword">Confirm password:</label>
-        <input
-          id="confirmPassword"
-          name="confirmPassword"
-          type="password"
-          value={data.confirmPassword}
-          onChange={handleChange}
-        />
-        <div className="register__button-container">
-          <button type="submit" className="register__link">
-            Register
-          </button>
-        </div>
-      </form>
+            or
+            
+            <button type="button" className="modal__button-log-in" onClick={onLoginClick}>
+                {" "}
+                 Log In
+            </button>
+            </div>
+            </div>
+        </ModalWithForm>
+    );
+};
 
-      <div className="register__signin">
-        <p>Already a member?</p>
-        <Link to="/LoginModal" className="register__login-link">
-          Log in here
-        </Link>
-      </div>
-    </ModalWithForm>
-  );
-}
 
-export default Login;
+export default Register;

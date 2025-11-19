@@ -67,7 +67,7 @@ export default function AddItemModal({
             id="imageUrl"
             className="modal__input"
             placeholder="Image Url"
-            onChange={handleimageUrlChange}
+            onChange={handleImageUrlChange}
             value={imageUrl}
           />
         </label>

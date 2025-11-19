@@ -1,77 +1,90 @@
-import "./AddItemModal.css";
+import "./LoginModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const Login = ({ handleLogin }) => {
-  const [data, setData] = useState({
-    username: "",
-    password: "",
-  });
+const Login = ({
+    isOpen,
+    onClose,
+    onSignUpClick,
+    handleLogin
+}) => {
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+   
+    const handlePasswordChange = (e) => {
+        console.log(e.target.value);
+        setPassword(e.target.value);
+    };
+    const handleEmailChange = (e) => {
+        console.log(e.target.value);
+        setEmail(e.target.value);
+    };
+ 
+    const handleLoginSubmit = (e) => {
+        e.preventDefault();
+        handleLogin({email, password});
+    };
 
-    const handleSubmit = (e) => {
-    e.preventDefault();
-    handleLogin(data);
-  };
+    useEffect(() => {
+        if (isOpen) {
+          setEmail("");
+          setPassword("");
+        }
+      }, [isOpen]);
 
-  useEffect(() => {
-    setData({
-      username: "",
-      password: "",
-    });
-  }, [isOpen]);
+    return (
+        <ModalWithForm
+        title="Log in"
+        isOpen={isOpen}
+        onClose={onClose}
+        onSubmit={handleLoginSubmit}
+        >
+            <div className="modal__text-deco">
+            <label>
+                Email 
+                <input
+                type="email"
+                name="email"
+                minLength="1"
+                maxLength="30"
+                placeholder="Email"
+                required
+                value={email}
+                onChange={handleEmailChange}
+                className="modal__input"
+                />
+            </label>
+            <label>
+                Password 
+                <input
+                type="password"
+                name="password"
+                minLength="1"
+                placeholder="Password"
+                required
+                value={password}
+                onChange={handlePasswordChange}
+                className="modal__input"
+                />
+            </label>
+            <div className="modal__button-div">
+            <button type="submit" className="modal__button-login">
+                {" "}
+                 Log In
+            </button>
 
-  return (
-    <ModalWithForm
-      title="Login"
-      buttonText="Login"
-      name="login"
-      isOpen={isOpen}
-      closeModalClick={closeModalClick}
-      onSubmit={handleSubmit}
-    >
-      <form className="login__form" onSubmit={handleSubmit}>
-        <label htmlFor="username">Login:</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          value={data.username}
-          required
-          onChange={handleChange}
-        />
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          required
-          value={data.password}
-          onChange={handleChange}
-        />
-        <div className="login__button-container">
-          <button type="submit" className="login__link">
-            Log in
-          </button>
-        </div>
-      </form>
-
-      <div className="login__signup">
-        <p>Not a member yet?</p>
-        <Link to="/RegisterModal" className="signup__link">
-          Sign up here
-        </Link>
-      </div>
-    </ModalWithForm>
-  );
-}
+            or
+            
+            <button type="button" className="modal__button-signup" onClick={onSignUpClick}>
+                Sign Up
+                {" "}
+            </button>
+            </div>
+            </div>
+        </ModalWithForm>
+    );
+};
 
 export default Login;
