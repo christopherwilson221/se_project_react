@@ -44,33 +44,34 @@ export default function AddItemModal({
       onSubmit={handleAddSubmit}
 
     >
-      <label htmlFor="name" className="modal__label">
-        Name{""}
-        <input
-          type="text"
-          className="modal__input"
-          id="name"
-          placeholder="Name"
-          minLength="1"
-          maxLength="30"
-          required
-          onChange={handleNameChange}
-          value={name}
-        />
-      </label>
-      <label htmlFor="imageUrl" className="modal__label">
-        Image{""}
-        <input
-          type="url"
-          className="modal__input"
-          id="imageUrl"
-          placeholder="Image URL"
-          minLength="1"
-          required
-          onChange={handleImageUrlChange}
-          value={imageUrl}
-        />
-      </label>
+      <div className="modal__block">
+        <label htmlFor="name" className="modal__label">
+          Name
+          <input
+            type="text"
+            id="name"
+            name="name"
+            className="modal__input"
+            placeholder="Name"
+            minLength="1"
+            maxLength="30"
+            onChange={handleNameChange}
+          />
+        </label>
+      </div>
+      <div className="modal__block">
+        <label htmlFor="imageUrl" className="modal__label">
+          Link {""}
+          <input
+            type="text"
+            id="imageUrl"
+            className="modal__input"
+            placeholder="Image Url"
+            onChange={handleimageUrlChange}
+            value={imageUrl}
+          />
+        </label>
+      </div>
       <fieldset className="modal__radio-buttons">
         <legend className="modal__legend"> Select Weather Type:</legend>
         <label htmlFor="hot" className="modal__label modal__label_type_radio">

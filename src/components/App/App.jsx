@@ -265,6 +265,7 @@ function App() {
             isOpen={activeModal === "add-garment"}
             onClose={closeActiveModal}
             onAddItemModalSubmit={handleAddItemModalSubmit}
+            isLoggedIn={isLoggedIn}
           />
           <ItemModal
             item={selectedCard}
