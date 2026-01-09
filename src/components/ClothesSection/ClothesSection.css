@@ -1,25 +1,26 @@
-.clothes-section__container{
+.clothes-section{
+    padding-left: 116px;
+}
+
+.clothes__section-content{
     display: flex;
-    flex-direction: row;
-    gap: 20px;
 }
 
-.clothes-section__title{
+.clothes__section-text{
     font-size: 20px;
+    font-weight: 700;
+    line-height: 24.8px;
+    text-align: left;
 }
 
-.clothes-section__button{
-    color: rgba(0, 0, 0, 0.6);
-    font-size: 20px;
-    border: 0px;
-}
-
-.clothes-section__list{
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0;
+.clothes__section-add{
     padding: 0;
-    list-style-type: none;
-    gap: 21px;
-    height: 676px;
+    margin: 0 20px 0 20px;
+    border: none;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: rgba(0, 0, 0, 0.6);
+    background-color: transparent;
+    cursor: pointer;
 }

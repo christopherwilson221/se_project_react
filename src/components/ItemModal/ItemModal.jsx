@@ -1,30 +1,40 @@
 import "./ItemModal.css";
+import React from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext.jsx";
 
-function ItemModal({ activeModal, selectedCard, closeModalClick, handleDeleteItem }) {
+function ItemModal({ item, onClose, isOpen, handleDeleteItem }) {
+  const { currentUser } = React.useContext(CurrentUserContext);
+  const isOwn = item.owner === currentUser._id;
+
   return (
-    <div className={`modal ${activeModal === "preview" && "modal_open"}`}>
-      <div className="modal__item_content">
+    <div className={`modal ${isOpen && "modal_open"}`}>
+      <div className="modal__content_type_image">
         <button
           type="button"
-          className="modal__item_close"
-          onClick={closeModalClick}
-        ></button>
+          className="modal_close"
+          onClick={onClose}
+        > X </button>
         <img
-          src={String(selectedCard.imageUrl)}
-          alt={selectedCard.name}
-          className="modal__item_image"
+          src={item.imageUrl}
+          alt={item.name}
+          className="modal__image"
         />
-        <div className="modal__item_footer">
-         <div className="modal__item_left">
-          <h2 className="modal__item_caption">{selectedCard.name}</h2>
-          <p className="modal__item_weather">Weather: {selectedCard.weather}</p>
-        </div>
-        <button
-          className="modal__item_delete"
-          onClick={() => handleDeleteItem(selectedCard._id)}
-        >
-          Delete item
-        </button>
+        <div className="modal__footer">
+            <h2 className="modal__description">{item.name}</h2>
+            <p className="modal__weather">
+              Weather: {item.weather}
+            </p>
+          {currentUser ? (
+            <button
+              type="button"
+              className="modal__delete-button"
+              onClick={() => handleDeleteItem(item)}
+            >
+              Delete Item
+            </button>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </div>

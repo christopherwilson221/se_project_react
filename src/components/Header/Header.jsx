@@ -3,9 +3,19 @@ import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import logo from "../../assets/logo.png";
 import avatar from "../../assets/avatar.png";
 import { Link } from "react-router-dom";
+import ProtectedRoute from "../ProtectedRoute";
+import CurrentUserContext from "../../contexts/CurrentUserContext.jsx";
+import { useContext } from "react";
 
-function Header({ openModalClick, weatherData }) {
-  console.log("Header props:", { openModalClick, weatherData });
+function Header({
+  handleAddClick,
+  weatherData,
+  onSignUpClick,
+  onLoginClick,
+  isLoggedIn,
+}) {
+  const currentUser = useContext(CurrentUserContext);
+  console.log("Header props:", { handleAddClick, weatherData });
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
@@ -14,30 +24,55 @@ function Header({ openModalClick, weatherData }) {
   return (
     <header className="header">
       <div className="header__left-container">
-      <Link to="/">
-      <img className="header_logo" alt="WTWR" src={logo} />
-      </Link>
-      
-      <p className="header__date-and-location"> {currentDate}, {weatherData.city}</p>
+        <Link to="/">
+          <img className="header_logo" alt="WTWR" src={logo} />
+        </Link>
+
+        <p className="header__date-and-location">
+          {" "}
+          {currentDate}, {weatherData.city}
+        </p>
       </div>
       <div className="header__right-container">
-      <ToggleSwitch />
-      <button
-        onClick={openModalClick}
-        type="button"
-        className="header__add-clothes-btn"
-      > + Add clothes
-      </button>
-      <Link to="/profile">
-            <div className="header__user-container">
-        <p className="header__username">Terrence Tegegnee</p>
-        <img
-          src={avatar}
-          alt="Terrence Tegegne"
-          className="header__avatar"
-        ></img>
-        </div>
-      </Link>
+        <ToggleSwitch />
+        <ProtectedRoute isLoggedIn={isLoggedIn}>
+          <button
+            onClick={openModalClick}
+            type="button"
+            className="header__add-clothes-btn"
+          >
+            {" "}
+            + Add clothes
+          </button>
+        </ProtectedRoute>
+        <Link to="/profile" isLoggedIn={!isLoggedIn}>
+          <div className="header__user-container" isLoggedIn={!isLoggedIn}>
+            <p className="header__username">Terrence Tegegnee</p>
+            <img
+              src={avatar}
+              alt="Terrence Tegegne"
+              className="header__avatar"
+            ></img>
+          </div>
+          <div className="header__user-container" isLoggedIn={isLoggedIn}>
+            <p className="header__username">{currentUser.username}</p>
+            <img src={avatar} alt="Username" className="header__avatar"></img>
+          </div>
+        </Link>
+        <Link to="/profile" isLoggedIn={isLoggedIn} className="header_link">
+          <div className="header__user-container" isLoggedIn={!isLoggedIn}>
+            <p className="header__username">{currentUser.username}</p>
+            <img
+              src={avatar}
+              alt="avatar"
+              className="header__avatar"
+            ></img>
+          </div>
+          <div className="header__user-container" isLoggedIn={isLoggedIn}>
+            <p className="header__username">{currentUser.username}</p>
+            <img src={avatar} alt="Username" className="header__avatar"></img>
+          </div>
+        </Link>
       </div>
     </header>
   );

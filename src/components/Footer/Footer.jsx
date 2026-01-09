@@ -1,12 +1,12 @@
-import './Footer.css'
+import "./Footer.css";
 
 function Footer() {
- return (
+  return (
     <footer className="footer">
       <p className="footer__developer">Developed by Christopher Wilson</p>
-      <p className="footer__year">{new Date().getFullYear()}</p>
+      <p className="footer__date">{new Date().getFullYear()}</p>
     </footer>
- );
+  );
 }
 
-export default Footer
+export default Footer;
